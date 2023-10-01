@@ -35,5 +35,10 @@ namespace Suburb.Utils
 
             return disposable;
         }
+
+        public static Color GetNewAlpha(Color source, float alpha)
+        {
+            return new Color(source.r, source.g, source.b, alpha);
+        }
     }
 }
