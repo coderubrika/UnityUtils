@@ -93,5 +93,12 @@ namespace Suburb.Utils
         {
             return new Vector2(source.x, y);
         }
+        
+        public static void ResetLocal(this Transform source)
+        {
+            source.localPosition = Vector3.zero;
+            source.localRotation = Quaternion.identity;
+            source.localScale = Vector3.one;
+        }
     }
 }
