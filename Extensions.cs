@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Suburb.Utils.Serialization;
+using Object = UnityEngine.Object;
 
 namespace Suburb.Utils
 {
@@ -71,8 +73,8 @@ namespace Suburb.Utils
             foreach (T obj in objects)
                 Object.Destroy(obj.gameObject);
 
-            if (objects is List<T> listObjects)
-                listObjects.Clear();
+            if (objects is ICollection<T> collection)
+                collection.Clear();
         }
 
         public static void DestroyGameObjects(this IEnumerable<GameObject> objects)
@@ -97,8 +99,38 @@ namespace Suburb.Utils
         public static void ResetLocal(this Transform source)
         {
             source.localPosition = Vector3.zero;
-            source.localRotation = Quaternion.identity;
             source.localScale = Vector3.one;
+            source.localRotation = Quaternion.identity;
+        }
+        
+        public static void SetLocal(this Transform source, TransformData transformData)
+        {
+            source.localPosition = transformData.Position;
+            source.localScale = transformData.Scale;
+            source.localRotation = Quaternion.Euler(transformData.Rotation);
+        }
+
+        public static bool HasAndEqual<TKey, TValue>(
+            this Dictionary<TKey, TValue> source, 
+            TKey checkKey,
+            TValue checkValue)
+        where TValue : IEquatable<TValue>
+        {
+            if (!source.TryGetValue(checkKey, out TValue realValue))
+                return false;
+
+            return realValue.Equals(checkValue);
+        }
+
+        public static bool HasAndEqual<TKey, TValue>(
+            this Dictionary<TKey, object> source,
+            TKey checkKey,
+            TValue checkValue)
+        {
+            if (!source.TryGetValue(checkKey, out object realValue))
+                return false;
+
+            return realValue is TValue tObject && tObject.Equals(checkValue);
         }
     }
 }
