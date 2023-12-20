@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Suburb.Utils.Serialization;
 using Object = UnityEngine.Object;
 
@@ -132,5 +133,10 @@ namespace Suburb.Utils
 
             return realValue is TValue tObject && tObject.Equals(checkValue);
         }
+
+        public static bool IsNullOnEmpty<T>(this IEnumerable<T> source)
+        {
+            return source == null || !source.Any();
+        } 
     }
 }

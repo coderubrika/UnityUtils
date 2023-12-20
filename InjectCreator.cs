@@ -23,16 +23,14 @@ namespace Suburb.Utils
             return diContainer.InstantiatePrefabForComponent<T>(prefab, parent);
         }
 
-        public T Create<T>(Object prefab, Transform parent, IEnumerable<object> args)
+        public T Create<T>(Object prefab, Transform parent, params object[] args)
         {
             return diContainer.InstantiatePrefabForComponent<T>(prefab, parent, args);
         }
 
-        public T Create<T> (object[] args = null)
+        public T Create<T> (params object[] args)
         {
-            if (args != null)
-                return diContainer.Instantiate<T>(args);
-            return diContainer.Instantiate<T>();
+            return diContainer.Instantiate<T>(args);
         }
     }
 }
