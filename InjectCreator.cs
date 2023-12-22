@@ -12,20 +12,22 @@ namespace Suburb.Utils
         {
             this.diContainer = diContainer;
         }
-
-        public GameObject Create(Object prefab, Transform parent)
+        
+        public GameObject Create(GameObject prefab, Transform parent)
         {
             return diContainer.InstantiatePrefab(prefab, parent);
         }
-
-        public T Create<T>(Object prefab, Transform parent)
+        
+        public TComponent Create<TComponent>(GameObject prefab, Transform parent, params object[] args)
+            where TComponent : Component
         {
-            return diContainer.InstantiatePrefabForComponent<T>(prefab, parent);
+            return diContainer.InstantiatePrefabForComponent<TComponent>(prefab, parent, args);
         }
 
-        public T Create<T>(Object prefab, Transform parent, params object[] args)
+        public TComponent Create<TComponent>(TComponent component, Transform parent, params object[] args)
+            where TComponent : Component
         {
-            return diContainer.InstantiatePrefabForComponent<T>(prefab, parent, args);
+            return diContainer.InstantiatePrefabForComponent<TComponent>(component, parent, args);
         }
 
         public T Create<T> (params object[] args)
