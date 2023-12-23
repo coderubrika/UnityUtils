@@ -43,7 +43,7 @@ namespace Suburb.Utils
             return new Color(source.r, source.g, source.b, alpha);
         }
 
-        public static Tween FadeCanvas(CanvasGroup canvasGroup, ValueAnimationData<float> config)
+        public static Tween FadeCanvas(CanvasGroup canvasGroup, ValueStartEndAnimationData<float> config)
         {
             canvasGroup.alpha = config.Start;
             return canvasGroup.DOFade(config.End, config.AnimationSettings.Duration)
