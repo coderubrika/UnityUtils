@@ -1,4 +1,5 @@
 using System;
+using Suburb.Common;
 using UnityEngine;
 
 namespace Suburb.Utils.Serialization
@@ -7,10 +8,10 @@ namespace Suburb.Utils.Serialization
     public class PrefabsGroup
     {
         [SerializeField] private string name;
-        [SerializeField] private GameObject[] prefabs;
+        [SerializeField] private PrefabRef[] prefabs;
 
         public string Name => name;
 
-        public GameObject[] Prefabs => prefabs;
+        public PrefabRef[] Prefabs => prefabs;
     }
 }

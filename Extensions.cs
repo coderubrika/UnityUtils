@@ -137,6 +137,6 @@ namespace Suburb.Utils
         public static bool IsNullOnEmpty<T>(this IEnumerable<T> source)
         {
             return source == null || !source.Any();
-        } 
+        }
     }
 }
