@@ -8,6 +8,9 @@ namespace Suburb.Utils.Serialization
     [Serializable]
     public class AnimationSettingsData
     {
+        [JsonProperty("delay")] 
+        public float Delay;
+        
         [JsonProperty("duration")]
         public float Duration;
 

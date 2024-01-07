@@ -15,8 +15,5 @@ namespace Suburb.Utils.Serialization
         
         [JsonProperty("scale")]
         public Vector3 Scale;
-
-        // [JsonProperty("children")] 
-        // public TransformData[] children;
     }
 }
