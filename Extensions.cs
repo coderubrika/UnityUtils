@@ -134,9 +134,15 @@ namespace Suburb.Utils
             return realValue is TValue tObject && tObject.Equals(checkValue);
         }
 
-        public static bool IsNullOnEmpty<T>(this IEnumerable<T> source)
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
         {
             return source == null || !source.Any();
+        }
+        
+        public static bool Contain(this RectTransform rectTransform, Vector2 point)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, point, null, out Vector2 localPoint);
+            return rectTransform.rect.Contains(localPoint);
         }
     }
 }
