@@ -35,17 +35,17 @@ namespace Suburb.Utils
                 && Mathf.Abs(source.z - destination.z) < closeDistance;
         }
 
-        public static void Log<T>(this T obj, string message, string filter="")
+        public static void Log<T>(this T obj, object message, string filter="")
         {
             Debug.Log($"{filter}[{typeof(T).Name}] {message}");
         }
 
-        public static void LogWarning<T>(this T obj, string message, string filter = "")
+        public static void LogWarning<T>(this T obj, object message, string filter = "")
         {
             Debug.LogWarning($"{filter}[{typeof(T).Name}] {message}");
         }
 
-        public static void LogError<T>(this T obj, string message, string filter = "")
+        public static void LogError<T>(this T obj, object message, string filter = "")
         {
             Debug.LogError($"{filter}[{typeof(T).Name}] {message}");
         }
