@@ -2,17 +2,22 @@
 
 namespace Suburb.Utils
 {
-    public class DisposableHook : IDisposable
+    public class DisposableObject : IDisposable
     {
         private readonly Action onDispose;
+        private bool isDisposed;
 
-        public DisposableHook(Action onDispose)
+        public DisposableObject(Action onDispose)
         {
             this.onDispose = onDispose;
         }
 
         public void Dispose()
         {
+            if (isDisposed)
+                return;
+            
+            isDisposed = true;
             onDispose?.Invoke();
         }
     }
