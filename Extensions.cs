@@ -97,6 +97,16 @@ namespace Suburb.Utils
             return new Vector2(source.x, y);
         }
         
+        public static Vector3 To3(this Vector2 source)
+        {
+            return new Vector3(source.x, source.y, 0f);
+        }
+        
+        public static Vector2 To2(this Vector3 source)
+        {
+            return new Vector2(source.x, source.y);
+        }
+        
         public static void ResetLocal(this Transform source)
         {
             source.localPosition = Vector3.zero;
