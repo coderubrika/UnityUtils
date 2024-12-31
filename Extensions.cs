@@ -178,8 +178,14 @@ namespace Suburb.Utils
             if (dict.Count == 0)
                 return;
 
-            foreach (var key in dict.Keys)
+            foreach (var key in dict.Keys.ToArray())
                 dict[key] = value;
+        }
+
+        public static void Fill<TValue>(this TValue[] array, TValue value)
+        {
+            for (int i = 0; i < array.Length; i++)
+                array[i] = value;
         }
     }
 }
