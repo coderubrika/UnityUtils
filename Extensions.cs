@@ -154,5 +154,32 @@ namespace Suburb.Utils
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, point, null, out Vector2 localPoint);
             return rectTransform.rect.Contains(localPoint);
         }
+
+        public static void Dispose(this IEnumerable<IDisposable> disposables)
+        {
+            foreach (var disposable in disposables)
+                disposable?.Dispose();
+        }
+
+        public static void AddOrReplace<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue value)
+        {
+            if (dict.TryAdd(key, value))
+                return;
+            dict[key] = value;
+        }
+
+        public static IEnumerable<T> FilterNull<T>(this IEnumerable<T> enumerable)
+        {
+            return enumerable.Where(item => item != null);
+        }
+
+        public static void Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, TValue value)
+        {
+            if (dict.Count == 0)
+                return;
+
+            foreach (var key in dict.Keys)
+                dict[key] = value;
+        }
     }
 }
