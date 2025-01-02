@@ -187,5 +187,11 @@ namespace Suburb.Utils
             for (int i = 0; i < array.Length; i++)
                 array[i] = value;
         }
+        
+        public static void FillInstances<TValue>(this TValue[] array, Func<int, TValue> instantiate)
+        {
+            for (int i = 0; i < array.Length; i++)
+                array[i] = instantiate(i);
+        }
     }
 }
