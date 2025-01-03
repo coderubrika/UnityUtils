@@ -50,5 +50,15 @@ namespace Suburb.Utils
                 .SetEase(config.AnimationSettings.Easing)
                 .OnKill(() => canvasGroup.alpha = config.End);
         }
+        
+        public static float GetDurationForPercentage0(float current, float duration)
+        {
+            return current * duration;
+        }
+
+        public static float GetDurationForPercentage1(float current, float duration)
+        {
+            return (1 - current) * duration;
+        }
     }
 }

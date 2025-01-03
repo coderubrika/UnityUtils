@@ -2,7 +2,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using MPUIKIT;
 using Suburb.Utils.Serialization;
+using UniRx;
 using Object = UnityEngine.Object;
 
 namespace Suburb.Utils
@@ -192,6 +197,96 @@ namespace Suburb.Utils
         {
             for (int i = 0; i < array.Length; i++)
                 array[i] = instantiate(i);
+        }
+        
+        public static IObservable<Unit> ToObservableOnComplete(this Tween source)
+        {
+            Subject<Unit> subject = new();
+            source.onComplete += () =>
+            {
+                subject.OnNext(Unit.Default);
+                subject.OnCompleted();
+            };
+            return subject.ObserveOnMainThread();
+        }
+
+        public static IObservable<Unit> ToObservableOnKill(this Tween source)
+        {
+            Subject<Unit> subject = new();
+            source.onKill += () =>
+            {
+                subject.OnNext(Unit.Default);
+                subject.OnCompleted();
+            };
+            return subject.ObserveOnMainThread();
+        }
+
+        public static IObservable<Unit> ToObservable(this Tween source)
+        {
+            Subject<Unit> subject = new();
+            source.onKill += () =>
+            {
+                subject.OnNext(Unit.Default);
+                subject.OnCompleted();
+            };
+            
+            source.onComplete += () =>
+            {
+                subject.OnNext(Unit.Default);
+            };
+            return subject.ObserveOnMainThread();
+        }
+
+        public static Vector2 Sum(this IEnumerable<Vector2> source)
+        {
+            return source.Aggregate(Vector2.zero, (acc, x) => acc + x);
+        }
+
+        public static TweenerCore<Color, Color, ColorOptions> DOColorOutline(this MPImage target, Color endValue, float duration)
+        {
+            TweenerCore<Color, Color, ColorOptions> t = DOTween.To(() => target.OutlineColor, x => target.OutlineColor = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+
+        public static TweenerCore<float, float, FloatOptions> DORadius(this MPImage target, float endValue, float duration)
+        {
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(
+                () => target.Circle.Radius,
+                x =>
+                {
+                    var circle = target.Circle;
+                    circle.Radius = x;
+                    target.Circle = circle;
+                },
+                endValue, 
+                duration);
+            t.SetTarget(target);
+            return t;
+        }
+
+        public static IObservable<Vector3> OnPositionChangedAsObservable(this Transform target)
+        {
+            Vector3 position = target.position;
+            Vector3 delta = Vector3.zero;
+            
+            return Observable.EveryUpdate()
+                .Where(_ =>
+                {
+                    bool isChanged = position != target.position;
+                    delta = target.position - position;
+                    position = target.position;
+                    return isChanged;
+                })
+                .Select(_ => delta)
+                .ObserveOnMainThread();
+        }
+        
+        public static string TruncateWithEllipsis(this string input, int maxLength)
+        {
+            if (input == null || input.Length <= maxLength) 
+                return input;
+            return input.Substring(0, maxLength - 3) + "...";
         }
     }
 }
