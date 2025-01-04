@@ -15,9 +15,7 @@ namespace Suburb.Utils
 
         public static string GetUID()
         {
-            return DateTimeOffset.Now
-                .ToUnixTimeMilliseconds()
-                .ToString();
+            return DateTime.Now.Ticks.ToString();
         }
         
         public static IEnumerable<T> Generate<T>(Func<int, T> generator, int count)
