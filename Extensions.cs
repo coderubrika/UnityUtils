@@ -288,5 +288,11 @@ namespace Suburb.Utils
                 return input;
             return input.Substring(0, maxLength - 3) + "...";
         }
+
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+        {
+            foreach (var item in items)
+                collection.Add(item);
+        }
     }
 }
