@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Suburb.Utils
 {
-    public class UIUtils
+    public static class UIUtils
     {
         public static IDisposable UpdateContent(RectTransform content)
         {
@@ -59,6 +59,14 @@ namespace Suburb.Utils
         public static float GetDurationForPercentage1(float current, float duration)
         {
             return (1 - current) * duration;
+        }
+        
+        public static Vector3 TransformScreenToWorld(RectTransform rectTransform, Camera camera, Vector2 screenPoint)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, null, out Vector2 localPoint);
+            Vector2 pivot = rectTransform.pivot;
+            Vector2 size = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
+            return camera.ViewportToWorldPoint(new Vector3(localPoint.x / size.x + pivot.x, localPoint.y / size.y + pivot.y));
         }
     }
 }
