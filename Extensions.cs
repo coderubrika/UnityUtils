@@ -9,6 +9,7 @@ using MPUIKIT;
 using Suburb.Utils.Serialization;
 using UniRx;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Suburb.Utils
 {
@@ -293,6 +294,60 @@ namespace Suburb.Utils
         {
             foreach (var item in items)
                 collection.Add(item);
+        }
+        
+        public static Vector2 Clamp(this Vector2 source, float min, float max)
+        {
+            return new Vector2(
+                Mathf.Clamp(source.x, min, max), 
+                Mathf.Clamp(source.y, min, max));
+        }
+        
+        public static Vector3 Clamp(this Vector3 source, float min, float max)
+        {
+            return new Vector3(
+                Mathf.Clamp(source.x, min, max), 
+                Mathf.Clamp(source.y, min, max),
+                Mathf.Clamp(source.z, min, max));
+        }
+        
+        public static Vector2 Clamp01(this Vector2 source)
+        {
+            return source.Clamp(0, 1);
+        }
+        
+        public static Vector3 Clamp01(this Vector3 source)
+        {
+            return source.Clamp(0, 1);
+        }
+
+        public static Vector2 SwapAxes(this Vector2 source)
+        {
+            return new Vector2(source.y, source.x);
+        }
+
+        public static float Clamp(this MinMax source, float value)
+        {
+            return Mathf.Clamp(value, source.Min, source.Max);
+        }
+        
+        public static float InverseLerp(this MinMax source, float value)
+        {
+            return Mathf.InverseLerp(source.Min, source.Max, value);
+        }
+        
+        public static float Lerp(this MinMax source, float t)
+        {
+            return Mathf.Lerp(source.Min, source.Max, t);
+        }
+        
+        public static void Shuffle<T>(this T[] array)
+        {
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (array[i], array[j]) = (array[j], array[i]);
+            }
         }
     }
 }
